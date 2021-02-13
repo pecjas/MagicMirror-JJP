@@ -277,11 +277,16 @@ Module.register("calendar", {
 					if (typeof this.config.customEvents[ev].color !== "undefined" && this.config.customEvents[ev].color !== "") {
 						needle = new RegExp(this.config.customEvents[ev].keyword, "gi");
 						if (needle.test(event.title)) {
-							eventWrapper.style.cssText = "color:" + this.config.customEvents[ev].color;
-							titleWrapper.style.cssText = "color:" + this.config.customEvents[ev].color;
+							// JJP-START - Support symbol-only coloring for custom events
 							if (this.config.displaySymbol) {
 								symbolWrapper.style.cssText = "color:" + this.config.customEvents[ev].color;
 							}
+							if ( !this.config.customEvents[ev].hasOwnProperty( "coloredSymbolOnly" ) || !this.config.customEvents[ev].coloredSymbolOnly )
+							{
+								eventWrapper.style.cssText = "color:" + this.config.customEvents[ev].color;
+								titleWrapper.style.cssText = "color:" + this.config.customEvents[ev].color;
+							}
+							// JJP-END - Support symbol-only coloring for custom events
 							break;
 						}
 					}
